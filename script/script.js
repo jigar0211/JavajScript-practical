@@ -10,6 +10,7 @@ const six = document.querySelector("#six")
 const seven = document.querySelector("#seven")
 const height = document.querySelector("#eight")
 const nine = document.querySelector("#nine")
+const pi = document.querySelector('#pi')
 // operator
 const openParenthesis = document.querySelector("#opened-parenthesis")
 const closedParenthesis = document.querySelector("#closed-parenthesis")
@@ -21,6 +22,8 @@ const lessButton = document.querySelector("#less-operator")
 const plusButton = document.querySelector("#plus-operator")
 const decimalButton = document.querySelector("#decimal-operator")
 const equalButton = document.querySelector("#equal-button")
+const moduloButton = document.querySelector('#modulo')
+const exponentButton = document.querySelector('#exponent')
 // calculator array
 let calculatorArray;
 let calculatorDomArray = [];
@@ -105,6 +108,12 @@ function eventFunction() {
             appendNumber(0)
         }
     })
+    pi.addEventListener("click", () => {
+        if(characterCounter < 1) {
+            characterCounter++
+            appendNumber(3.14)
+        }
+    })
     // operator event listener 
     decimalButton.addEventListener("click", () => {
         characterCounter++
@@ -129,6 +138,16 @@ function eventFunction() {
         tempcharacterCounter = characterCounter
         characterCounter = 0
         appendNumber("/")
+    })
+    moduloButton.addEventListener("click", () => {
+        tempcharacterCounter = characterCounter
+        characterCounter = 0
+        appendNumber("%")
+    })
+    exponentButton.addEventListener("click", () => {
+        tempcharacterCounter = characterCounter
+        characterCounter = 0
+        appendNumber("^")
     })
     openParenthesis.addEventListener("click", () => {
         tempcharacterCounter = characterCounter
@@ -198,9 +217,11 @@ function eventFunction() {
             }
             
         } 
-        while(calculatorArray.includes("*") || calculatorArray.includes("/") || calculatorArray.includes("+") || calculatorArray.includes("-") || calculatorArray.some(x => x < 0) && calculatorArray.length !== 1) {
+        while(calculatorArray.includes("*") || calculatorArray.includes("/") || calculatorArray.includes("+") || calculatorArray.includes("-")|| calculatorArray.includes("%") || calculatorArray.includes("^") || calculatorArray.some(x => x < 0) && calculatorArray.length !== 1) {
             solveMultiplicationAndDivision()
             solveAdditionsAndSubtraction()
+            solvedmod()
+            exponent()
         }
         appendResult()
         // calculator logic
@@ -393,7 +414,23 @@ function solveAdditionsAndSubtraction() {
             calculatorArray.splice(i,1)
         }
     }
-}         
+}     
+function solvedmod() {
+    for (let i = 0; i < calculatorArray.length; i++) {
+        if (calculatorArray[i] === "%") {
+            calculatorArray[i - 1] %= calculatorArray[i + 1]
+            calculatorArray.splice(i,2)
+        }
+    }
+}   
+function exponent() {
+    for (let i = 0; i < calculatorArray.length; i++) {
+        if (calculatorArray[i] === "^") {
+            calculatorArray[i - 1] = Math.pow(calculatorArray[i + 1], calculatorArray[i - 1])
+            calculatorArray.splice(i,2)
+        }
+    }
+}   
     function appendResult() {
         calculatorDisplay.textContent = ""
         calculatorDomArray = []
