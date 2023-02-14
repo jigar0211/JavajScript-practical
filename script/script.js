@@ -11,6 +11,7 @@ const seven = document.querySelector("#seven")
 const height = document.querySelector("#eight")
 const nine = document.querySelector("#nine")
 const pi = document.querySelector('#pi')
+const constantE = document.querySelector('#constantE')
 // operator
 const openParenthesis = document.querySelector("#opened-parenthesis")
 const closedParenthesis = document.querySelector("#closed-parenthesis")
@@ -24,10 +25,28 @@ const decimalButton = document.querySelector("#decimal-operator")
 const equalButton = document.querySelector("#equal-button")
 const moduloButton = document.querySelector('#modulo')
 const exponentButton = document.querySelector('#exponent')
+const plusminusButton = document.querySelector('#plusminus')
+const sinButton = document.querySelector("#sin")
+const cosButton = document.querySelector("#cos")
+const tanButton = document.querySelector("#tan") 
+const cotButton = document.querySelector("#cot") 
+const cosecButton = document.querySelector("#cosec") 
+const secButton = document.querySelector('#sec')
+const factorialButton = document.querySelector("#factorial")
+const sigchangeButton = document.querySelector("#sigchange")
+const oneuponxButton = document.querySelector("#oneuponx") 
+const xsqureButton = document.querySelector("#xsqure") 
+const xcubeButton = document.querySelector("#xcube") 
+const modxButton = document.querySelector("#modx")
+const changeButtons = document.getElementsByClassName("#changebutton")
+const ceilButton = document.querySelector("#ceil")
+const floorButton = document.querySelector("#floor")
+const randomButton = document.querySelector("#random")
 // calculator array
 let calculatorArray;
 let calculatorDomArray = [];
 // other variable 
+let secondval = true
 let tempSpan
 let counter
 let parenthesisCounter
@@ -114,6 +133,12 @@ function eventFunction() {
             appendNumber(3.14)
         }
     })
+    constantE.addEventListener("click", () => {
+        if(characterCounter < 1) {
+            characterCounter++
+            appendNumber(2.718281828459045)
+        }
+    })
     // operator event listener 
     decimalButton.addEventListener("click", () => {
         characterCounter++
@@ -148,6 +173,48 @@ function eventFunction() {
         tempcharacterCounter = characterCounter
         characterCounter = 0
         appendNumber("^")
+    })
+    sinButton.addEventListener("click", () => {
+        sinmethod()
+    })
+    cosButton.addEventListener("click", () => {
+        cosmethod()
+    })
+    tanButton.addEventListener("click", () => {
+        tanmethod()
+    })
+    cotButton.addEventListener("click", () => {
+        cotmethod()
+    })
+    cosecButton.addEventListener("click", () => {
+        cosecmethod()
+    })
+    secButton.addEventListener("click", () => {
+        secmethod()
+    })
+    factorialButton.addEventListener("click", () => {
+        factorial()
+    })
+    sigchangeButton.addEventListener("click", () => {
+        sigchangefunction()
+    })
+    oneuponxButton.addEventListener("click", () => {
+        oneuponx()
+    })
+    modxButton.addEventListener("click", () => {
+        modx()
+    })
+    // changeButtons.addEventListener("click", () => {
+    //     changeButton('firstvalue','secondvalue')
+    // })
+    ceilButton.addEventListener("click", () => {
+        ceilfunction()
+    })
+    floorButton.addEventListener("click", () => {
+        floorfunction()
+    })
+    randomButton.addEventListener("click", () => {
+        randomfunction()
     })
     openParenthesis.addEventListener("click", () => {
         tempcharacterCounter = characterCounter
@@ -431,6 +498,80 @@ function exponent() {
         }
     }
 }   
+function sinmethod() {
+    calculatorDisplay.textContent = Math.sin(calculatorDisplay.textContent)
+} 
+function cosmethod() {
+    calculatorDisplay.textContent = Math.cos(calculatorDisplay.textContent)
+} 
+function tanmethod() {
+    calculatorDisplay.textContent = Math.tan(calculatorDisplay.textContent)
+}
+function cotmethod() {
+    calculatorDisplay.textContent = 1/Math.tan(calculatorDisplay.textContent)
+}
+function cosecmethod() {
+    calculatorDisplay.textContent = 1/Math.sin(calculatorDisplay.textContent)
+}
+function secmethod() {
+    calculatorDisplay.textContent = 1/Math.cos(calculatorDisplay.textContent)
+}
+function factorial() {
+    if (calculatorDisplay.textContent < 0) {
+      return NaN; // Error: factorial of negative number is undefined
+    }
+    if (calculatorDisplay.textContent === 0 || calculatorDisplay.textContent === 1) {
+      return 1; // Base case: factorial of 0 or 1 is 1
+    }
+    let result = 1;
+    for (let i = 2; i <= calculatorDisplay.textContent; i++) {
+      result *= i;
+    }
+    return calculatorDisplay.textContent = result;
+}
+function sigchangefunction() {
+    if(calculatorDisplay.textContent.charAt(0) === "-") {
+        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+    } else {
+        calculatorDisplay.textContent = "-" + calculatorDisplay.textContent
+    }
+}
+function oneuponx() {
+    calculatorDisplay.textContent = 1/calculatorDisplay.textContent;
+}
+function modx() {
+    if(calculatorDisplay.textContent.charAt(0) === "-") {
+        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+    }
+}
+function ceilfunction() {
+    calculatorDisplay.textContent = Math.ceil(calculatorDisplay.textContent)
+}
+function floorfunction() {
+    calculatorDisplay.textContent = Math.floor(calculatorDisplay.textContent)
+}
+function randomfunction() {
+    calculatorDisplay.textContent = Math.random(calculatorDisplay.textContent)
+}
+// function changeButton(currentVal, nextVal) {
+//     if(flag == 1) {
+//         for (let element of document.getElementsByClassName(currentVal)) {
+//             element.style.display = "none";
+//         }
+//         for (let element of document.getElementsByClassName(nextVal)) {
+//             element.style.display = "inline-block";
+//         }
+//         flag = 0;   
+//     } else {
+//         for (let element of document.getElementsByClassName(nextVal)) {
+//             element.style.display = "none";
+//         }
+//         for (let element of document.getElementsByClassName(currentVal)) {
+//             element.style.display = "inline-block"
+//         }
+//         flag = 1;
+//     }
+// }
     function appendResult() {
         calculatorDisplay.textContent = ""
         calculatorDomArray = []
@@ -439,5 +580,5 @@ function exponent() {
         tempSpan.classList.add('colored-text')
         calculatorDisplay.append(tempSpan)
     }
-    // end of the function
+    // end of the function2.718281828459045
 }
