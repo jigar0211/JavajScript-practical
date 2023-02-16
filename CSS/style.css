@@ -25,6 +25,8 @@
 }  
 .container {
   width: 27rem;
+  /* padding-left: var(--bs-gutter-x,.0rem);
+  padding-right: var(--bs-gutter-x,.0rem); */
 }
 .calculator {
   background-color: #f2f2f2;
@@ -151,6 +153,15 @@ col {
   width: 100%;
   border: none;
   outline: none;
-  /* margin-left: 0px; */
+  margin-left: 0px;
   background: none;
+}
+.secondvalue {
+  display: none;
+}
+.anothertrigo {
+  display: none;
+}
+.degbtn {
+  font-weight: bold;
 }
