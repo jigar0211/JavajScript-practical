@@ -17,9 +17,9 @@ https://jigar0211.github.io/JavajScript-practical/
 ### Some of the key features of the Practical :
 1. Basic Arithmetic Operations: The calculator can perform the four basic arithmetic operations - addition, subtraction, multiplication, and division - using a set of buttons that allow the user to input numbers and operators.
 
-2. Advanced Mathematical Functions: Many JavaScript calculators also include advanced mathematical functions such as square roots, exponents, logarithms, and trigonometric functions.
+2. Advanced Mathematical Functions: This JavaScript calculators also include advanced mathematical functions such as square roots, exponents, logarithms, and trigonometric functions.
 
-3. Memory Functions: Some calculators include memory functions such as storing values and recalling them later, or the ability to perform calculations based on previously stored values.
+3. Memory Functions: This calculators include memory functions such as storing values and recalling them later, or the ability to perform calculations based on previously stored values.
 
 4. User Interface: The user interface of a JavaScript calculator is typically designed to be user-friendly, with clear labels and buttons that allow for easy input of numbers and operators.
 
