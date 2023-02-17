@@ -26,26 +26,20 @@ const equalButton = document.querySelector("#equal-button")
 const moduloButton = document.querySelector('#modulo')
 const exponentButton = document.querySelector('#exponent')
 const plusminusButton = document.querySelector('#plusminus')
-const sinButton = document.querySelector("#sin")
-const cosButton = document.querySelector("#cos")
-const tanButton = document.querySelector("#tan") 
-const cotButton = document.querySelector("#cot") 
-const cosecButton = document.querySelector("#cosec") 
-const secButton = document.querySelector('#sec')
-const factorialButton = document.querySelector("#factorial")
-const sigchangeButton = document.querySelector("#sigchange")
-const oneuponxButton = document.querySelector("#oneuponx") 
 const xsqureButton = document.querySelector("#xsqure") 
-const xcubeButton = document.querySelector("#xcube") 
-const modxButton = document.querySelector("#modx")
-const changeButtons = document.getElementsByClassName("#changebutton")
-const ceilButton = document.querySelector("#ceil")
-const floorButton = document.querySelector("#floor")
-const randomButton = document.querySelector("#random")
+const exp = document.querySelector("#exp")
+const squreroot = document.querySelector("#ysqrx")
+const logyxButton = document.querySelector("#logyx")
 // calculator array
 let calculatorArray;
 let calculatorDomArray = [];
 // other variable 
+let degrad = 1
+let memory = []
+let fe = 1
+let inv_trigo = 1
+let hyp_trigo = 1
+let flag = 1
 let secondval = true
 let tempSpan
 let counter
@@ -55,6 +49,52 @@ let toLoop = false
 // this variable is used to save how many time the user click a number before an operator, that's for the purpose of blocking the user to make numbers larger than 15 digits
 let characterCounter = 0;
 let tempcharacterCounter
+
+function changeButtonfunction() {
+    if (flag == 1) {
+        for (let element of document.getElementsByClassName('firstvalue')) {
+            element.style.display = "none";
+        }
+        for (let element of document.getElementsByClassName('secondvalue')) {
+            element.style.display = "inline-block";
+        }
+        flag = 0;
+    } else {
+        for (let element of document.getElementsByClassName('secondvalue')) {
+            element.style.display = "none";
+        }
+        for (let element of document.getElementsByClassName('firstvalue')) {
+            element.style.display = "inline-block";
+        }
+        flag = 1;
+    }
+}
+function change_trigo_func() {
+    if (inv_trigo == 0 && hyp_trigo == 1) {
+        document.getElementById('trigo_func').style.display = "none";
+        document.getElementById('inverse_trigo_func').style.display = "flex";
+        document.getElementById('hyp_trigo_func').style.display = "none";
+        document.getElementById('hyp_inverse_trigo_func').style.display = "none";
+    }
+    else if (inv_trigo == 1 && hyp_trigo == 1) {
+        document.getElementById('trigo_func').style.display = "flex";
+        document.getElementById('inverse_trigo_func').style.display = "none";
+        document.getElementById('hyp_trigo_func').style.display = "none";
+        document.getElementById('hyp_inverse_trigo_func').style.display = "none";
+    }
+    else if (inv_trigo == 0 && hyp_trigo === 0) {
+        document.getElementById('trigo_func').style.display = "none";
+        document.getElementById('inverse_trigo_func').style.display = "none";
+        document.getElementById('hyp_trigo_func').style.display = "none";
+        document.getElementById('hyp_inverse_trigo_func').style.display = "flex";
+    }
+    else {
+        document.getElementById('trigo_func').style.display = "none";
+        document.getElementById('inverse_trigo_func').style.display = "none";
+        document.getElementById('hyp_trigo_func').style.display = "flex";
+        document.getElementById('hyp_inverse_trigo_func').style.display = "none";
+    }
+}
 eventFunction()
 function eventFunction() {
     // append function
@@ -174,47 +214,23 @@ function eventFunction() {
         characterCounter = 0
         appendNumber("^")
     })
-    sinButton.addEventListener("click", () => {
-        sinmethod()
+    exp.addEventListener("click", () => {
+        if(characterCounter < 5){
+            characterCounter++ 
+            appendNumber(".e+")
+        }
     })
-    cosButton.addEventListener("click", () => {
-        cosmethod()
+    squreroot.addEventListener("click", () => {
+        if(characterCounter < 5){
+            characterCounter++ 
+            appendNumber("√")
+        }
     })
-    tanButton.addEventListener("click", () => {
-        tanmethod()
-    })
-    cotButton.addEventListener("click", () => {
-        cotmethod()
-    })
-    cosecButton.addEventListener("click", () => {
-        cosecmethod()
-    })
-    secButton.addEventListener("click", () => {
-        secmethod()
-    })
-    factorialButton.addEventListener("click", () => {
-        factorial()
-    })
-    sigchangeButton.addEventListener("click", () => {
-        sigchangefunction()
-    })
-    oneuponxButton.addEventListener("click", () => {
-        oneuponx()
-    })
-    modxButton.addEventListener("click", () => {
-        modx()
-    })
-    // changeButtons.addEventListener("click", () => {
-    //     changeButton('firstvalue','secondvalue')
-    // })
-    ceilButton.addEventListener("click", () => {
-        ceilfunction()
-    })
-    floorButton.addEventListener("click", () => {
-        floorfunction()
-    })
-    randomButton.addEventListener("click", () => {
-        randomfunction()
+    logyxButton.addEventListener("click", () => {
+        if(characterCounter < 5){
+            characterCounter++ 
+            appendNumber("ylog")
+        }
     })
     openParenthesis.addEventListener("click", () => {
         tempcharacterCounter = characterCounter
@@ -225,6 +241,399 @@ function eventFunction() {
         tempcharacterCounter = characterCounter
         characterCounter = 0
         appendNumber(")")
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const factorialButton = document.querySelector("#factorial")
+        factorialButton.addEventListener("click", () => {
+            if (calculatorDisplay.textContent < 0) {
+                return NaN; // Error: factorial of negative number is undefined
+              }
+              if (calculatorDisplay.textContent === 0 || calculatorDisplay.textContent === 1) {
+                return 1; // Base case: factorial of 0 or 1 is 1
+              }
+              let result = 1;
+              for (let i = 2; i <= calculatorDisplay.textContent; i++) {
+                result *= i;
+              }
+              return calculatorDisplay.textContent = result;
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const sigchangeButton = document.querySelector("#sigchange")
+        sigchangeButton.addEventListener("click", () => {
+            if(calculatorDisplay.textContent.charAt(0) === "-") {
+                calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+            } else {
+                calculatorDisplay.textContent = "-" + calculatorDisplay.textContent
+            }
+        })
+    })  
+    document.addEventListener('DOMContentLoaded', () => {
+        const oneuponxButton = document.querySelector("#oneuponx") 
+        oneuponxButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = 1/calculatorDisplay.textContent;
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const modxButton = document.querySelector("#modx")
+        modxButton.addEventListener("click", () => {
+            if(calculatorDisplay.textContent.charAt(0) === "-") {
+                calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const ceilButton = document.querySelector("#ceil")
+        ceilButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.ceil(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const floorButton = document.querySelector("#floor")
+        floorButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.floor(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const randomButton = document.querySelector("#random")
+        randomButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.random(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const sqrtButton = document.querySelector("#sqrt")
+        sqrtButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.sqrt(calculatorDisplay.textContent)
+        })
+    })
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const tenrestoxButton = document.getElementById('tenrestox');
+        tenrestoxButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.pow(10, calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const logButton = document.getElementById('log');
+        logButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.log10(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const lnButton = document.getElementById('ln')
+        lnButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.log(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const xsqureButton = document.getElementById('xsqure')
+        xsqureButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.pow(calculatorDisplay.textContent, 2)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const xcubeButton = document.querySelector("#xcube") 
+        xcubeButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.pow(calculatorDisplay.textContent, 3)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cbrtButton = document.querySelector("#cbrt")
+        cbrtButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.cbrt(calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const tworesxButton = document.querySelector("#tworesx")
+        tworesxButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.pow(2, calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const eraisedtoxButtton = document.querySelector("#eraisedtox")
+        eraisedtoxButtton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.pow(2.718281828459045, calculatorDisplay.textContent)
+        })
+    })
+    document.addEventListener("DOMContentLoaded", () => {
+        const trignosecondButton = document.querySelector("#trigonosecond")
+        trignosecondButton.addEventListener("click", () => {
+            if(inv_trigo){
+                inv_trigo = 0;
+            }
+            else{
+                inv_trigo = 1;
+            }
+            change_trigo_func();
+        })
+    })
+    document.addEventListener("DOMContentLoaded", () => {
+        const trignohuperButton = document.querySelector("#trigonohyper")
+        trignohuperButton.addEventListener("click", () => {
+            if(hyp_trigo){
+                hyp_trigo = 0;
+            }
+            else{
+                hyp_trigo = 1;
+            }
+            change_trigo_func();
+        })
+    })
+    // for Basic Trigonometry function
+    document.addEventListener('DOMContentLoaded', () => {
+        const sinButton = document.querySelector("#sin")
+        sinButton.addEventListener("click", () => {
+            if(degrad) {
+                calculatorDisplay.textContent = (Math.sin((Math.PI / 180) * Number(calculatorDisplay.textContent)));
+            } else {
+                calculatorDisplay.textContent = Math.sin(calculatorDisplay.textContent)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cosButton = document.querySelector("#cos")
+        cosButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = (Math.cos((Math.PI / 180) * Number(calculatorDisplay.textContent)));
+            }else {
+                calculatorDisplay.textContent = Math.cos(calculatorDisplay.textContent)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const tanButton = document.querySelector("#tan") 
+        tanButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = (Math.tan((Math.PI / 180) * Number(calculatorDisplay.textContent)));
+            } else { 
+                calculatorDisplay.textContent = Math.tan(calculatorDisplay.textContent)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cotButton = document.querySelector("#cot") 
+        cotButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.tan(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1/Math.tan(calculatorDisplay.textContent)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cosecButton = document.querySelector("#cos")
+        cosecButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.sin(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1/Math.sin(calculatorDisplay.textContent)
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const secButton = document.querySelector('#sec')
+        secButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.cos(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1/Math.cos(calculatorDisplay.textContent)
+            }
+        }) 
+    })
+    // for Inverse Trigonometry functions Start
+    document.addEventListener('DOMContentLoaded', () => {
+        const sininverseButton = document.querySelector("#insin")
+        sininverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = (Math.asin((Math.PI / 180) * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = (Math.asin(calculatorDisplay.textContent));
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cosinverseButton = document.querySelector("#incos")
+        cosinverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = (Math.acos((Math.PI / 180) * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = (Math.acos(calculatorDisplay.textContent));
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cotinverseButton = document.querySelector("#incot")
+        cotinverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.atan(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1 / Math.atan(calculatorDisplay.textContent);
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const secinverseButton = document.querySelector("#insec")
+        secinverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.acos(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1 / Math.acos(calculatorDisplay.textContent);
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cscinverseButton = document.querySelector("#incsc")
+        cscinverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = 1 / (Math.asin(Math.PI / 180 * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = 1 / Math.acos(calculatorDisplay.textContent);
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const taninverseButton = document.querySelector("#intan")
+        taninverseButton.addEventListener("click", () => {
+            if (degrad) {
+                calculatorDisplay.textContent = (Math.atan((Math.PI / 180) * calculatorDisplay.textContent));
+            } else {
+                calculatorDisplay.textContent = (Math.atan(calculatorDisplay.textContent));
+            }
+        })
+    })
+    // for Inverse Trigonometry functions End
+    // for Hyper Trigonometry functions Start
+    document.addEventListener('DOMContentLoaded', () => {
+        const sinhyperButton = document.querySelector("#hsin")
+        sinhyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (Math.sinh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const coshyperButton = document.querySelector("#hcos")
+        coshyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (Math.cosh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cothyperButton = document.querySelector("#hcot")
+        cothyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (1/Math.tanh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const sechyperButton = document.querySelector("#hsec")
+        sechyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (1/Math.cosh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cschyperButton = document.querySelector("#hcsc")
+        cschyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (1/Math.sinh(calculatorDisplay.textContent));
+    cschyper()
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const tanhyperButton = document.querySelector("#htan")
+        tanhyperButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (Math.tanh(calculatorDisplay.textContent));
+        })
+    })
+    // for Hyper Trigonometry functions End
+    // for Hyper Inverse Trigonometry functions Start
+    document.addEventListener('DOMContentLoaded', () => {
+        const sinhyperinverseButton = document.querySelector("#hinsin")
+        sinhyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (Math.asinh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const coshyperinverseButton = document.querySelector("#hincos")
+        coshyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (Math.acosh(calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cothyperinverseButton = document.querySelector("#hincot")
+        cothyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = 0.5 * Math.log((calculatorDisplay.textContent + 1) / (calculatorDisplay.textContent - 1));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const sechyperinverseButton = document.querySelector("#hinsec")
+        sechyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = (1/Math.acosh( calculatorDisplay.textContent));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const cschyperinverseButton = document.querySelector("#hincsc")
+        cschyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = Math.log((1/ calculatorDisplay.textContent) + Math.sqrt((1/(calculatorDisplay.textContent * calculatorDisplay.textContent)) + 1));
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const tanhyperinverseButton = document.querySelector("#hintan")
+        tanhyperinverseButton.addEventListener("click", () => {
+            calculatorDisplay.textContent = 0.5 * Math.log((1 + calculatorDisplay.textContent) / (1 - calculatorDisplay.textContent));
+        })
+    })
+    // for Hyper Inverse Trigonometry functions End
+    document.addEventListener('DOMContentLoaded', () => {
+        const feButton = document.querySelector("#febtn")
+        feButton.addEventListener("click", () => {
+            if (fe) {
+                calculatorDisplay.textContent = Number(calculatorDisplay.textContent);
+                fe = 0;
+            }
+            else {
+                calculatorDisplay.textContent = Number(calculatorDisplay.textContent).toExponential();
+                fe = 1;
+            }
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const degButton = document.querySelector('#deg')
+        degButton.addEventListener("click", () => {
+            if (degrad == 1) {
+                document.querySelector('#deg').innerHTML = "RAD";
+                degrad = 0;
+            } else {
+                document.querySelector('#deg').innerHTML = 'DEG';
+                degrad = 1;
+            }
+        })
+    })
+    // For Memory functions
+    document.addEventListener('DOMContentLoaded', () => {
+        const memorysaveButton = document.querySelector('#memorysave')
+        memorysaveButton.addEventListener("click", () => {
+            memorysave()
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const memoryclearButton = document.querySelector('#memoryclear')
+        memoryclearButton.addEventListener("click", () => {
+            memoryclear()
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const memoryrecallButton = document.querySelector('#memoryrecall')
+        memoryrecallButton.addEventListener("click", () => {
+            memoryrecall()
+        })
+    })
+    document.addEventListener('DOMContentLoaded', () => {
+        const memoryplusButton = document.querySelector('#memoryplus')
+        memoryplusButton.addEventListener("click", () => {
+            memoryplus()
+        })
+    })
+    document.addEventListener("DOMContentLoaded", () => {
+        const memoryminusButton = document.querySelector('#memoryminus')
+        memoryminusButton.addEventListener("click", () => {
+            memoryminus()
+        })
     })
     eraseButton.addEventListener("click", () => {
         calculatorDisplay.textContent = ""
@@ -254,6 +663,9 @@ function eventFunction() {
         calculatorArray = calculatorDisplay.textContent.split("")
         uniteCharacter()
         parseCalculatorArray()
+        expfunction()
+        squrerootfunction()
+        logyxfunction()
         while(calculatorArray.includes("(" || calculatorArray(")"))) {
             solveMultiplicationAndDivisionInParenthesis()
             solveAdditionsAndSubtractionInParenthesis()
@@ -414,8 +826,6 @@ function multiplyDivide(operatorChecker) {
                     toLoop = false
                 }
             }
-            
-            
             while (counter < finalParenthesis) {
                 counter++
                 // iterate trought the pharenthesis
@@ -493,85 +903,70 @@ function solvedmod() {
 function exponent() {
     for (let i = 0; i < calculatorArray.length; i++) {
         if (calculatorArray[i] === "^") {
-            calculatorArray[i - 1] = Math.pow(calculatorArray[i + 1], calculatorArray[i - 1])
+            calculatorArray[i - 1] = Math.pow(calculatorArray[i - 1], calculatorArray[i + 1])
             calculatorArray.splice(i,2)
         }
     }
 }   
-function sinmethod() {
-    calculatorDisplay.textContent = Math.sin(calculatorDisplay.textContent)
+function expfunction() {
+    for (let i = 0; i < calculatorArray.length; i++) {
+        if (calculatorArray[i] === "e") {
+            calculatorArray[i - 1] = calculatorArray[0] * Math.pow(10, calculatorArray[calculatorArray.length-1]) 
+        }
+    }
 } 
-function cosmethod() {
-    calculatorDisplay.textContent = Math.cos(calculatorDisplay.textContent)
+function squrerootfunction() {
+    for (let i = 0; i < calculatorArray.length; i++) {
+        if (calculatorArray[i] === "√") {
+            calculatorArray[i - 1] =  Math.pow(calculatorArray[calculatorArray.length - 1], 1 / calculatorArray[0]) 
+        }
+    }
 } 
-function tanmethod() {
-    calculatorDisplay.textContent = Math.tan(calculatorDisplay.textContent)
-}
-function cotmethod() {
-    calculatorDisplay.textContent = 1/Math.tan(calculatorDisplay.textContent)
-}
-function cosecmethod() {
-    calculatorDisplay.textContent = 1/Math.sin(calculatorDisplay.textContent)
-}
-function secmethod() {
-    calculatorDisplay.textContent = 1/Math.cos(calculatorDisplay.textContent)
-}
-function factorial() {
-    if (calculatorDisplay.textContent < 0) {
-      return NaN; // Error: factorial of negative number is undefined
+function logyxfunction() {
+    for (let i = 0; i < calculatorArray.length; i++) {
+        if (calculatorArray[i] === "y" && calculatorArray[i+1] === "l" && calculatorArray[i+2] === "o" && calculatorArray[i+3] === "g") {
+            calculatorArray[i - 1] =  Math.log(calculatorArray[calculatorArray.length - 1]) / Math.log(calculatorArray[0])
+        }
     }
-    if (calculatorDisplay.textContent === 0 || calculatorDisplay.textContent === 1) {
-      return 1; // Base case: factorial of 0 or 1 is 1
-    }
-    let result = 1;
-    for (let i = 2; i <= calculatorDisplay.textContent; i++) {
-      result *= i;
-    }
-    return calculatorDisplay.textContent = result;
+} 
+//Memory functions Start
+function enablemcmr() {
+    document.getElementById('memoryclear').disabled = false;
+    document.getElementById('memoryrecall').disabled = false;
 }
-function sigchangefunction() {
-    if(calculatorDisplay.textContent.charAt(0) === "-") {
-        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+function memoryclear() {
+    memory = [];
+    document.getElementById('memoryclear').disabled = true;
+    document.getElementById('memoryrecall').disabled = true;
+}
+function memoryrecall() {
+    calculatorDisplay.textContent = memory[memory.length - 1];
+}
+function memoryplus() {
+    enablemcmr();
+    if (memory.length == 0) {
+        memory.push(parseFloat(calculatorDisplay.textContent));
     } else {
-        calculatorDisplay.textContent = "-" + calculatorDisplay.textContent
+        memory[memory.length - 1] += parseFloat(calculatorDisplay.textContent);
     }
 }
-function oneuponx() {
-    calculatorDisplay.textContent = 1/calculatorDisplay.textContent;
-}
-function modx() {
-    if(calculatorDisplay.textContent.charAt(0) === "-") {
-        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(1)
+function memoryminus() {
+    enablemcmr();
+    if (memory.length == 0) {
+        memory.push(parseFloat(calculatorDisplay.textContent));
+    } else {
+        memory[memory.length - 1] -= parseFloat(calculatorDisplay.textContent);
     }
 }
-function ceilfunction() {
-    calculatorDisplay.textContent = Math.ceil(calculatorDisplay.textContent)
+function memorysave() {
+    enablemcmr();
+    if (parseFloat(calculatorDisplay.textContent) == NaN) {
+        alert("Enter a number");
+    } else {
+        memory.push(parseFloat(calculatorDisplay.textContent));
+    }
 }
-function floorfunction() {
-    calculatorDisplay.textContent = Math.floor(calculatorDisplay.textContent)
-}
-function randomfunction() {
-    calculatorDisplay.textContent = Math.random(calculatorDisplay.textContent)
-}
-// function changeButton(currentVal, nextVal) {
-//     if(flag == 1) {
-//         for (let element of document.getElementsByClassName(currentVal)) {
-//             element.style.display = "none";
-//         }
-//         for (let element of document.getElementsByClassName(nextVal)) {
-//             element.style.display = "inline-block";
-//         }
-//         flag = 0;   
-//     } else {
-//         for (let element of document.getElementsByClassName(nextVal)) {
-//             element.style.display = "none";
-//         }
-//         for (let element of document.getElementsByClassName(currentVal)) {
-//             element.style.display = "inline-block"
-//         }
-//         flag = 1;
-//     }
-// }
+//Memory functions End 
     function appendResult() {
         calculatorDisplay.textContent = ""
         calculatorDomArray = []
@@ -580,5 +975,5 @@ function randomfunction() {
         tempSpan.classList.add('colored-text')
         calculatorDisplay.append(tempSpan)
     }
-    // end of the function2.718281828459045
-}
+    // end of the function
+}   
