@@ -11,7 +11,7 @@ This calculator is typically built using HTML, CSS, and JavaScript programming l
 | # Step 2: Go to the code and click on Download Zip    | ![Screenshot from 2023-02-17 10-17-16](https://user-images.githubusercontent.com/122254160/219551872-e3c5673e-0a70-4bee-b9bd-0920ced2f4d2.png)|
 | # Step 3: After Downloading Extract the file and run it in any browser   | ![Screenshot from 2023-02-17 10-28-43](https://user-images.githubusercontent.com/122254160/219553198-a59b96c5-af70-4944-ab8a-d5808d475556.png) |
 
-## Demo Link of the Practical ![link_icon_slanted](https://user-images.githubusercontent.com/122254160/219555036-e347a75e-5062-4b02-b498-1ff463f3a524.png): 
+## Demo Link of the Practical ![link_icon_slanted](https://user-images.githubusercontent.com/122254160/219555036-e347a75e-5062-4b02-b498-1ff463f3a524.png)
 https://jigar0211.github.io/JavajScript-practical/
 
 ### Some of the key features of the Practical :
