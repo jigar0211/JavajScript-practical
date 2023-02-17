@@ -421,7 +421,7 @@ function eventFunction() {
         })
     })
     document.addEventListener('DOMContentLoaded', () => {
-        const cosecButton = document.querySelector("#cos")
+        const cosecButton = document.querySelector("#csc")
         cosecButton.addEventListener("click", () => {
             if (degrad) {
                 calculatorDisplay.textContent = 1 / (Math.sin(Math.PI / 180 * calculatorDisplay.textContent));
