@@ -19,7 +19,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link type="text/css" rel="stylesheet" href="/CSS/style.css" />
+    <!-- to Resolve the Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'. -->
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <link type="text/css" rel="stylesheet" href="./CSS/style.css" />
     <link
       rel="icon"
       href="./img/js.png"
