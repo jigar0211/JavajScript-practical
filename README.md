@@ -47,5 +47,8 @@ This calculator is typically built using HTML, CSS, and JavaScript programming l
 ## Calculator Design :
 ![Screenshot from 2023-02-17 14-25-51](https://user-images.githubusercontent.com/122254160/219598998-1cfa3b9d-adab-4caf-869c-8ac4459a4bce.png)
 
+## Demo Video :
+[Screencast from 17-02-23 02:38:48 PM IST.webm](https://user-images.githubusercontent.com/122254160/219611750-3c5143aa-a9c6-43f3-823e-0bca83a0c61f.webm)
+
 ## Demo Link of the Practical ![link_icon_slanted](https://user-images.githubusercontent.com/122254160/219555036-e347a75e-5062-4b02-b498-1ff463f3a524.png)
 https://jigar0211.github.io/JavajScript-practical/
